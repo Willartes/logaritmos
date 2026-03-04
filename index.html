@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logaritmos - Prof. William Rodrigues</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 font-sans overflow-hidden">
+
+    <nav class="slide-counter-fixed bg-white rounded-md px-3 py-1 shadow border border-blue-300" aria-label="Seletor de slide">
+        <span class="text-blue-900 font-bold text-sm">
+            <button id="slideNumber" class="hover:bg-blue-100 px-1 rounded">1</button> / 15
+        </span>
+    </nav>
+
+    <main id="presentation-container">
+
+        <section class="slide active">
+            <header class="slide-content gradient-bg text-white shadow-2xl text-center">
+                <i class="fas fa-calculator text-6xl mb-6 text-yellow-300"></i>
+                <h1 class="text-5xl font-extrabold mb-4">Introdução ao Estudo dos Logaritmos</h1>
+                <p class="text-2xl mb-8 opacity-90 italic">Uma Jornada Histórica e Matemática</p>
+                <article class="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-md inline-block border border-white border-opacity-30">
+                    <p class="text-xl font-bold">Professor William Rodrigues da Silva</p>
+                    <p class="text-lg">Hortolândia - SP, 2025</p>
+                </article>
+            </header>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-8 text-center">Contextualização Histórica</h2>
+                <div class="space-y-6 text-2xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                    <p class="bg-blue-50 p-6 rounded-xl border-l-8 border-blue-600 italic">"No século XVI, o progresso da astronomia e da navegação exigia cálculos matemáticos monumentais."</p>
+                    <p>Multiplicações de números com muitos dígitos levavam dias e qualquer erro poderia ser fatal para uma expedição marítima.</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-8 text-center">John Napier: O Inventor</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12 justify-center">
+                    <figure>
+                        <img src="https://cdn1.genspark.ai/user-upload-image/4_generated/72c1d5a6-e49c-4ecf-8905-356e409b2aae" alt="John Napier" class="img-highlight w-64">
+                        <figcaption class="text-center mt-2 text-gray-500 font-bold">1550 – 1617</figcaption>
+                    </figure>
+                    <div class="max-w-xl">
+                        <h3 class="text-3xl font-bold text-blue-700 mb-4">O Barão de Merchiston</h3>
+                        <p class="text-xl text-gray-700">Nobel escocês que dedicou 20 anos para desenvolver as tabelas de logaritmos, publicadas em 1614. Seu objetivo era "libertar os matemáticos da escravidão das multiplicações".</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Ferramentas de Cálculo</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <section class="bg-blue-50 p-8 rounded-2xl shadow border-b-4 border-blue-500">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4"><i class="fas fa-ruler-horizontal mr-2"></i>Réguas de Cálculo</h3>
+                        <p class="text-lg">Dispositivos analógicos que utilizavam escalas logarítmicas para realizar operações complexas instantaneamente.</p>
+                    </section>
+                    <section class="bg-blue-50 p-8 rounded-2xl shadow border-b-4 border-blue-500">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4"><i class="fas fa-th mr-2"></i>Bastões de Napier</h3>
+                        <p class="text-lg">Também conhecidos como "Ossos de Napier", facilitavam a multiplicação através da soma de diagonais.</p>
+                    </section>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-8 text-center">Henry Briggs</h2>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-12 justify-center">
+                    <img src="https://cdn1.genspark.ai/user-upload-image/4_generated/356b8a8f-efd2-4d0f-bd15-87c7d8a24653" alt="Henry Briggs" class="img-highlight w-64">
+                    <div class="max-w-xl">
+                        <h3 class="text-3xl font-bold text-blue-700 mb-4">A Base 10</h3>
+                        <p class="text-xl text-gray-700">Briggs visitou Napier e sugeriu que os logaritmos fossem calculados na base 10. Isso permitiu que o logaritmo de 1 fosse 0, facilitando o uso no sistema decimal que usamos até hoje.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500 text-center">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10">O Logaritmo como Ponte</h2>
+                <div class="bg-blue-600 text-white p-12 rounded-3xl shadow-xl inline-block max-w-3xl">
+                    <p class="text-3xl font-bold mb-6 italic">"Transformamos o difícil em fácil."</p>
+                    <div class="grid grid-cols-2 gap-8 text-2xl font-mono">
+                        <div class="border-r border-blue-400">Multiplicação<br>&darr;<br>Adição</div>
+                        <div>Divisão<br>&darr;<br>Subtração</div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <div class="slide-content border-2 border-blue-500">
+                <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">A Magia na Base 2</h2>
+                <div class="overflow-x-auto mb-6">
+                    <table class="slide-table w-full text-center">
+                        <thead class="bg-blue-800 text-white">
+                            <tr>
+                                <th class="p-4">Expoente (x)</th>
+                                <th id="exp-5">5</th><th id="exp-9">9</th><th id="exp-14">14</th><th id="exp-15">15</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white text-xl">
+                            <tr>
+                                <td class="font-bold bg-blue-50">2<sup>x</sup></td>
+                                <td id="pow-5">32</td><td id="pow-9">512</td><td id="pow-14">16384</td><td id="pow-15">32768</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="multiplication-section" class="fade-in p-6 rounded-xl border-2 border-purple-200 bg-purple-50">
+                    <p id="mult-expression" class="fade-in text-2xl font-mono text-center">32 &times; 512 = ?</p>
+                    <p id="mult-log-step" class="fade-in text-xl font-mono text-center text-gray-600 mt-2">
+                        log₂(32) + log₂(512) = <span id="exp-val-5">5</span> + <span id="exp-val-9">9</span> = <span id="exp-sum">14</span>
+                    </p>
+                    <p id="mult-result" class="fade-in text-2xl font-bold text-green-700 text-center mt-2">Resultado: 16384</p>
+                </div>
+
+                <div id="division-section" class="fade-in p-6 rounded-xl border-2 border-orange-200 bg-orange-50 mt-4">
+                    <p id="div-expression" class="fade-in text-2xl font-mono text-center">16384 &divide; 32768 = ?</p>
+                    <p id="div-log-step" class="fade-in text-xl font-mono text-center text-gray-600 mt-2">
+                        14 - 15 = <span id="exp-diff">-1</span>
+                    </p>
+                    <p id="div-result" class="fade-in text-2xl font-bold text-green-700 text-center mt-2">Resultado: 0,5</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Definição Formal</h2>
+                <div class="bg-blue-50 p-12 rounded-3xl border-4 border-dashed border-blue-300">
+                    <div class="formula text-6xl p-12 text-center rounded-2xl mb-8 shadow-inner">
+                        log<sub>a</sub> b = x &nbsp; &hArr; &nbsp; a<sup>x</sup> = b
+                    </div>
+                    <p class="text-center text-2xl text-gray-600 italic">Onde: a > 0, a &ne; 1 e b > 0</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Exemplo: log<sub>2</sub> 8</h2>
+                <div class="flex flex-col items-center space-y-8 text-3xl font-mono">
+                    <p class="bg-gray-100 p-6 rounded-xl w-full text-center">log<sub>2</sub> 8 = x</p>
+                    <p class="text-blue-500">&darr;</p>
+                    <p class="bg-gray-100 p-6 rounded-xl w-full text-center">2<sup>x</sup> = 8</p>
+                    <p class="text-blue-500">&darr;</p>
+                    <p class="bg-green-100 p-6 rounded-xl w-full text-center font-bold">2<sup>x</sup> = 2<sup>3</sup> &rArr; x = 3</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Praticando</h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="p-8 bg-white border-2 border-blue-100 rounded-2xl shadow-sm">
+                        <p class="text-3xl font-bold text-blue-800">log<sub>3</sub> 81 = 4</p>
+                        <p class="text-gray-500 mt-2">Pois 3<sup>4</sup> = 81</p>
+                    </div>
+                    <div class="p-8 bg-white border-2 border-blue-100 rounded-2xl shadow-sm">
+                        <p class="text-3xl font-bold text-blue-800">log 1000 = 3</p>
+                        <p class="text-gray-500 mt-2">Pois 10<sup>3</sup> = 1000</p>
+                    </div>
+                    <div class="p-8 bg-white border-2 border-blue-100 rounded-2xl shadow-sm">
+                        <p class="text-3xl font-bold text-blue-800">log<sub>5</sub> 1 = 0</p>
+                        <p class="text-gray-500 mt-2">Pois 5<sup>0</sup> = 1</p>
+                    </div>
+                    <div class="p-8 bg-white border-2 border-blue-100 rounded-2xl shadow-sm">
+                        <p class="text-3xl font-bold text-blue-800">log<sub>a</sub> a = 1</p>
+                        <p class="text-gray-500 mt-2">Pois a<sup>1</sup> = a</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-8 text-center">Propriedades Operatórias</h2>
+                <div class="space-y-6">
+                    <div class="p-6 bg-blue-50 border-l-8 border-blue-500 rounded-r-xl">
+                        <h4 class="font-bold text-xl">1. Logaritmo do Produto</h4>
+                        <p class="text-2xl font-mono">log<sub>a</sub>(M &middot; N) = log<sub>a</sub>M + log<sub>a</sub>N</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 border-l-8 border-blue-500 rounded-r-xl">
+                        <h4 class="font-bold text-xl">2. Logaritmo do Quociente</h4>
+                        <p class="text-2xl font-mono">log<sub>a</sub>(M / N) = log<sub>a</sub>M - log<sub>a</sub>N</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 border-l-8 border-blue-500 rounded-r-xl">
+                        <h4 class="font-bold text-xl">3. Logaritmo da Potência</h4>
+                        <p class="text-2xl font-mono">log<sub>a</sub>(M<sup>k</sup>) = k &middot; log<sub>a</sub>M</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Desafios Rápidos</h2>
+                <ol class="space-y-8 text-2xl font-bold text-gray-700">
+                    <li class="bg-gray-50 p-6 rounded-xl">Calcule log<sub>2</sub> 1024.</li>
+                    <li class="bg-gray-50 p-6 rounded-xl">Determine x em log<sub>x</sub> 49 = 2.</li>
+                    <li class="bg-gray-50 p-6 rounded-xl">Simplifique log 2 + log 5.</li>
+                </ol>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Aplicações no Mundo Real</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-6 bg-white rounded-2xl shadow-lg">
+                        <i class="fas fa-house-damage text-4xl text-orange-500 mb-4"></i>
+                        <h4 class="font-bold">Sismologia</h4>
+                    </div>
+                    <div class="p-6 bg-white rounded-2xl shadow-lg">
+                        <i class="fas fa-flask text-4xl text-pink-500 mb-4"></i>
+                        <h4 class="font-bold">Química (pH)</h4>
+                    </div>
+                    <div class="p-6 bg-white rounded-2xl shadow-lg">
+                        <i class="fas fa-bullhorn text-4xl text-green-500 mb-4"></i>
+                        <h4 class="font-bold">Decibéis</h4>
+                    </div>
+                    <div class="p-6 bg-white rounded-2xl shadow-lg">
+                        <i class="fas fa-star text-4xl text-blue-500 mb-4"></i>
+                        <h4 class="font-bold">Astronomia</h4>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500">
+                <h2 class="text-4xl font-bold text-blue-800 mb-10 text-center">Bibliografia</h2>
+                <ul class="space-y-6 text-xl text-gray-700 max-w-3xl mx-auto">
+                    <li class="flex gap-4"><i class="fas fa-book-open mt-1 text-blue-600"></i> IEZZI, G. Fundamentos de Matemática Elementar.</li>
+                    <li class="flex gap-4"><i class="fas fa-book-open mt-1 text-blue-600"></i> BOYER, C. História da Matemática.</li>
+                    <li class="flex gap-4"><i class="fas fa-globe mt-1 text-blue-600"></i> Khan Academy - Curso de Logaritmos.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="slide">
+            <article class="slide-content border-2 border-blue-500 text-center gradient-bg text-white">
+                <h2 class="text-6xl font-extrabold mb-8">Conclusão</h2>
+                <p class="text-3xl italic mb-12">"A matemática é a linguagem com que Deus escreveu o universo."</p>
+                <div class="h-1 w-32 bg-yellow-400 mx-auto mb-12"></div>
+                <h3 class="text-4xl font-bold">Obrigado!</h3>
+                <p class="text-2xl mt-4">Prof. William Rodrigues da Silva</p>
+            </article>
+        </section>
+
+    </main>
+
+    <nav class="navigation-bar bg-white rounded-full px-4 py-2 shadow-2xl border border-blue-400">
+        <div class="flex items-center gap-4">
+            <button id="prevBtn" class="nav-btn-sm" aria-label="Anterior">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="text-blue-900 font-bold text-sm min-w-[70px] text-center">
+                <span id="current-slide-display">1</span> / 15
+            </span>
+            <button id="nextBtn" class="nav-btn-sm" aria-label="Próximo">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </nav>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,100 +1,194 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-    const currentDisplay = document.getElementById('current-slide-display');
-    const slideNumberBtn = document.getElementById('slideNumber');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let slide7Timeouts = [];
+// js/script.js
+(function () {
+    "use strict";
 
-    function showSlide(index) {
-        // Limpa animações anteriores do slide 7
-        slide7Timeouts.forEach(t => clearTimeout(t));
-        slide7Timeouts = [];
-        resetSlide7();
+    // --- Slides: 26 páginas HTML locais ---
+    const TOTAL = 26;
+    const slides = Array.from({ length: TOTAL }, (_, i) => ({
+        src:   `slides/page_${i + 1}.html`,
+        label: `Slide ${i + 1}`
+    }));
 
-        // Troca de slide
-        slides.forEach(s => {
-            s.classList.remove('active', 'visible');
-        });
+    // --- Elementos DOM ---
+    const frame        = document.getElementById("slide-frame");
+    const captionEl    = document.getElementById("slide-caption");
+    const currentEl    = document.getElementById("current-slide");
+    const totalEl      = document.getElementById("total-slides");
+    const prevBtn      = document.getElementById("prev-slide");
+    const nextBtn      = document.getElementById("next-slide");
+    const thumbPanel   = document.getElementById("thumbnails-panel");
+    const thumbList    = document.getElementById("thumbnails-list");
+    const slideWrapper = document.querySelector(".slide-wrapper");
+    const headerBtns   = document.querySelectorAll(".control-btn");
 
-        slides[index].classList.add('active');
-        // Pequeno delay para o efeito de fade
-        setTimeout(() => {
-            slides[index].classList.add('visible');
-        }, 50);
+    // --- Estado ---
+    let currentIndex  = 0;
+    let autoTimer     = null;
+    const AUTO_MS     = 5000;
 
-        currentSlide = index;
-        
-        // Atualiza contadores
-        if(currentDisplay) currentDisplay.textContent = currentSlide + 1;
-        if(slideNumberBtn) slideNumberBtn.textContent = currentSlide + 1;
+    // --- Init ---
+    totalEl.textContent = String(TOTAL);
+    renderSlide(0);
+    buildThumbnails();
+    scaleFrame();
+    window.addEventListener("resize", scaleFrame);
 
-        // Dispara animação se for o slide 7
-        if (currentSlide === 6) { 
-            animateSlide7();
-        }
+    // -------------------------------------------------------
+    // SCALE: ajusta o iframe 1280×720 ao tamanho do wrapper
+    // -------------------------------------------------------
+    function scaleFrame() {
+        const w = slideWrapper.clientWidth;
+        const h = slideWrapper.clientHeight;
+        const scale = Math.min(w / 1280, h / 720);
+        frame.style.transform = `scale(${scale})`;
+
+        // centraliza horizontal e verticalmente
+        const scaledW = 1280 * scale;
+        const scaledH = 720  * scale;
+        frame.style.left = `${(w - scaledW) / 2}px`;
+        frame.style.top  = `${(h - scaledH) / 2}px`;
+    }
+
+    // -------------------------------------------------------
+    // RENDER
+    // -------------------------------------------------------
+    function renderSlide(index) {
+        const slide = slides[index];
+        frame.src = slide.src;
+        frame.title = slide.label;
+        currentEl.textContent = String(index + 1);
+        captionEl.textContent = `${index + 1} / ${TOTAL} — ${slide.label}`;
+        updateActiveThumbnail(index);
     }
 
     function nextSlide() {
-        if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+        currentIndex = (currentIndex + 1) % TOTAL;
+        renderSlide(currentIndex);
     }
 
     function prevSlide() {
-        if (currentSlide > 0) showSlide(currentSlide - 0);
+        currentIndex = (currentIndex - 1 + TOTAL) % TOTAL;
+        renderSlide(currentIndex);
     }
 
-    // Navegação Eventos
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', () => {
-        if (currentSlide > 0) showSlide(currentSlide - 1);
-    });
+    // -------------------------------------------------------
+    // THUMBNAILS
+    // -------------------------------------------------------
+    function buildThumbnails() {
+        thumbList.innerHTML = "";
+        slides.forEach((slide, i) => {
+            const li  = document.createElement("li");
+            li.className = "thumbnails__item";
 
-    // Teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
-        if (e.key === 'ArrowLeft') showSlide(Math.max(0, currentSlide - 1));
-    });
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "thumbnail-btn";
+            if (i === 0) btn.classList.add("active");
+            btn.dataset.slide = String(i);
+            btn.title = slide.label;
 
-    // Lógica Específica Slide 7
-    function resetSlide7() {
-        const els = document.querySelectorAll('#presentation-container .fade-in, #presentation-container td, #presentation-container th');
-        els.forEach(el => {
-            el.classList.remove('show', 'highlight-blue', 'highlight-green', 'highlight-yellow');
+            const wrap = document.createElement("div");
+            wrap.className = "thumb-wrap";
+
+            const ifr = document.createElement("iframe");
+            ifr.src = slide.src;
+            ifr.scrolling = "no";
+            ifr.tabIndex = -1;
+            ifr.setAttribute("aria-hidden", "true");
+
+            wrap.appendChild(ifr);
+            btn.appendChild(wrap);
+            li.appendChild(btn);
+            thumbList.appendChild(li);
+        });
+
+        thumbList.addEventListener("click", (e) => {
+            const btn = e.target.closest(".thumbnail-btn");
+            if (!btn) return;
+            const idx = parseInt(btn.dataset.slide, 10);
+            if (!isNaN(idx)) {
+                currentIndex = idx;
+                renderSlide(currentIndex);
+            }
         });
     }
 
-    function animateSlide7() {
-        const d = 1000; // delay base
-        const add = (id, cls) => {
-            const el = document.getElementById(id);
-            if(el) el.classList.add(cls);
-        };
-
-        slide7Timeouts.push(setTimeout(() => add('multiplication-section', 'show'), d));
-        slide7Timeouts.push(setTimeout(() => {
-            add('mult-expression', 'show');
-            add('pow-5', 'highlight-blue');
-            add('pow-9', 'highlight-blue');
-        }, d * 2.5));
-
-        slide7Timeouts.push(setTimeout(() => {
-            add('mult-log-step', 'show');
-            add('exp-5', 'highlight-yellow');
-            add('exp-9', 'highlight-yellow');
-        }, d * 4.5));
-
-        slide7Timeouts.push(setTimeout(() => {
-            add('mult-result', 'show');
-            add('pow-14', 'highlight-green');
-        }, d * 6.5));
-
-        slide7Timeouts.push(setTimeout(() => {
-            add('division-section', 'show');
-        }, d * 8.5));
+    function updateActiveThumbnail(index) {
+        thumbList.querySelectorAll(".thumbnail-btn").forEach((btn, i) => {
+            btn.classList.toggle("active", i === index);
+        });
     }
 
-    // Inicializa
-    showSlide(0);
-});
+    // -------------------------------------------------------
+    // FULLSCREEN
+    // -------------------------------------------------------
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen?.();
+        } else {
+            document.exitFullscreen?.();
+        }
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+        setTimeout(scaleFrame, 100);
+    });
+
+    // -------------------------------------------------------
+    // THUMBNAILS PANEL
+    // -------------------------------------------------------
+    function toggleThumbnails() {
+        const hidden = thumbPanel.hasAttribute("hidden");
+        if (hidden) {
+            thumbPanel.removeAttribute("hidden");
+        } else {
+            thumbPanel.setAttribute("hidden", "");
+        }
+        setTimeout(scaleFrame, 50);
+    }
+
+    // -------------------------------------------------------
+    // AUTO PLAY
+    // -------------------------------------------------------
+    function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(nextSlide, AUTO_MS);
+        document.querySelector('[data-action="auto"]').textContent = "⏹ Stop";
+    }
+
+    function stopAuto() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+        const btn = document.querySelector('[data-action="auto"]');
+        if (btn) btn.textContent = "▶ Auto";
+    }
+
+    // -------------------------------------------------------
+    // EVENTOS
+    // -------------------------------------------------------
+    prevBtn.addEventListener("click", prevSlide);
+    nextBtn.addEventListener("click", nextSlide);
+
+    headerBtns.forEach((btn) => {
+        const action = btn.dataset.action;
+        if (!action) return;
+        btn.addEventListener("click", () => {
+            switch (action) {
+                case "fullscreen":  toggleFullscreen(); break;
+                case "thumbnails":  toggleThumbnails(); break;
+                case "auto":        autoTimer ? stopAuto() : startAuto(); break;
+            }
+        });
+    });
+
+    window.addEventListener("keydown", (e) => {
+        switch (e.key) {
+            case "ArrowLeft":  prevSlide(); break;
+            case "ArrowRight": nextSlide(); break;
+            case "f": case "F": toggleFullscreen(); break;
+            case "t": case "T": toggleThumbnails(); break;
+            case "a": case "A": autoTimer ? stopAuto() : startAuto(); break;
+            case "Escape": stopAuto(); break;
+        }
+    });
+
+})();
